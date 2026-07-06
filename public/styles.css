@@ -26,6 +26,7 @@ body {
 }
 
 .site-header .logo { font-weight: 700; font-size: 20px; }
+.site-header .tagline { color: var(--muted); font-size: 14px; }
 
 .hero {
   padding: 80px 40px;
@@ -46,8 +47,6 @@ body {
   margin-bottom: 16px;
 }
 
-/* ---- Chat widget ---- */
-
 #ai-support-launcher {
   position: fixed;
   bottom: 24px;
@@ -60,7 +59,8 @@ body {
   border: none;
   cursor: pointer;
   box-shadow: 0 8px 24px rgba(79, 70, 229, 0.35);
-  font-size: 26px;
+  font-size: 13px;
+  font-weight: 700;
   z-index: 9999;
 }
 
@@ -146,6 +146,7 @@ body {
 
 .ai-support-input input {
   flex: 1;
+  min-width: 0;
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 10px 12px;
@@ -167,10 +168,12 @@ body {
 
 .ai-support-input button:hover { background: var(--brand-dark); }
 
-/* ---- Admin page ---- */
-
 .admin-wrap { max-width: 760px; margin: 40px auto; padding: 0 20px; }
 .admin-wrap h1 { font-size: 24px; }
+.admin-wrap h2 { font-size: 18px; }
+.muted { color: var(--muted); }
+.empty { color: #9ca3af; }
+
 .admin-wrap .card {
   background: white;
   border: 1px solid var(--border);
@@ -178,6 +181,7 @@ body {
   padding: 20px;
   margin-bottom: 16px;
 }
+
 .admin-wrap label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
 .admin-wrap input, .admin-wrap textarea {
   width: 100%;
@@ -188,6 +192,7 @@ body {
   margin-bottom: 12px;
   font-family: inherit;
 }
+
 .admin-wrap textarea { min-height: 90px; resize: vertical; }
 .admin-wrap button.primary {
   background: var(--brand);
@@ -198,6 +203,7 @@ body {
   cursor: pointer;
   font-weight: 600;
 }
+
 .doc-item {
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -207,6 +213,7 @@ body {
   justify-content: space-between;
   gap: 12px;
 }
+
 .doc-item .doc-content { color: var(--muted); font-size: 13px; margin-top: 4px; white-space: pre-wrap; }
 .doc-item button {
   background: #fee2e2;
@@ -216,4 +223,21 @@ body {
   padding: 6px 10px;
   cursor: pointer;
   height: fit-content;
+}
+
+@media (max-width: 640px) {
+  .site-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+    padding: 18px 20px;
+  }
+
+  .hero {
+    padding: 48px 20px;
+  }
+
+  .hero h1 {
+    font-size: 32px;
+  }
 }

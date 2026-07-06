@@ -40,28 +40,31 @@ This is a portfolio project built to show a common, high-demand freelance use ca
 
 ```
 ai-support-demo/
-├── client/              # Embeddable widget + demo site + admin panel (no build step)
+├── api/
+│   └── index.js         # Vercel serverless function entry point
+├── public/              # Static storefront, admin panel, widget script, and CSS
 │   ├── index.html       # Simulated client website with the widget embedded
 │   ├── admin.html       # Knowledge base management UI
 │   ├── widget.js        # The embeddable chat widget itself
 │   └── styles.css
-└── server/
-    ├── index.js         # Express app entry point
-    ├── db.js            # MongoDB connection
-    ├── seed.js          # Populates sample FAQ data for a quick demo
-    ├── models/          # Mongoose schemas (Document, Conversation)
-    ├── services/
-    │   ├── retrieval.js # RAG retrieval logic
-    │   └── llm.js       # OpenAI / Anthropic / DeepSeek API wrapper
-    └── routes/api.js    # REST API (knowledge base CRUD + chat)
+├── server/
+│   ├── index.js         # Express app entry point
+│   ├── db.js            # MongoDB connection
+│   ├── seed.js          # Populates sample FAQ data for a quick demo
+│   ├── models/          # Mongoose schemas (Document, Conversation)
+│   ├── services/
+│   │   ├── retrieval.js # RAG retrieval logic
+│   │   └── llm.js       # OpenAI / Anthropic / DeepSeek API wrapper
+│   └── routes/api.js    # REST API (knowledge base CRUD + chat)
+├── package.json         # Root install/start scripts for local and Vercel deploys
+└── vercel.json          # Vercel rewrites for /api/* and /health
 ```
 
 ## Getting started
 
 ```bash
-cd server
 npm install
-cp .env.example .env      # then add your MongoDB URI + LLM API key
+cp server/.env.example server/.env  # then add your MongoDB URI + LLM API key
 npm run seed               # optional: populate sample FAQ data
 npm start
 ```
@@ -69,6 +72,18 @@ npm start
 Then open:
 - `http://localhost:4000/index.html` — the demo storefront with the chat widget
 - `http://localhost:4000/admin.html` — manage the knowledge base
+
+## Deploying to Vercel
+
+Deploy from the repository root. Vercel serves the static frontend from `public/`
+and routes `/api/*` requests to the serverless Express handler in `api/index.js`.
+
+Set these environment variables in Vercel Project Settings:
+
+- `MONGODB_URI`
+- `LLM_PROVIDER`
+- The matching provider key, such as `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, or `DEEPSEEK_API_KEY`
+- Optional runtime tuning: `LLM_TIMEOUT_MS`, `LLM_MAX_TOKENS`, `CHAT_RATE_LIMIT_WINDOW_MS`, `CHAT_RATE_LIMIT_MAX`
 
 ## Embedding on a real site
 

@@ -1,8 +1,4 @@
-// AI Support Widget — drop this <script> tag on any site to add an AI-powered
-// customer support chat, backed by your own knowledge base and LLM of choice.
-//
-// Usage on a client site:
-// <script src="https://your-domain.com/widget.js" data-api-base="https://your-domain.com/api"></script>
+// AI Support Widget - drop this script tag on any site to add AI-powered support.
 
 (function () {
   const scriptTag = document.currentScript;
@@ -149,7 +145,8 @@
   function injectMarkup() {
     const launcherEl = document.createElement("button");
     launcherEl.id = "ai-support-launcher";
-    launcherEl.innerHTML = "💬";
+    launcherEl.textContent = "Chat";
+    launcherEl.setAttribute("aria-label", "Open support chat");
 
     const windowEl = document.createElement("div");
     windowEl.id = "ai-support-window";
@@ -159,7 +156,7 @@
           <div class="title">Support Assistant</div>
           <div class="subtitle">Usually replies instantly</div>
         </div>
-        <button id="ai-support-close">✕</button>
+        <button id="ai-support-close" aria-label="Close support chat">x</button>
       </div>
       <div class="ai-support-messages" id="ai-support-messages"></div>
       <form class="ai-support-input" id="ai-support-form">
