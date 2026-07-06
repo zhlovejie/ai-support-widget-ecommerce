@@ -4,7 +4,7 @@ An embeddable AI chat widget that answers customer questions using **your own kn
 
 ![status](https://img.shields.io/badge/status-demo-blue) ![node](https://img.shields.io/badge/Node.js-18%2B-green) ![mongodb](https://img.shields.io/badge/MongoDB-8.x-47A248) ![license](https://img.shields.io/badge/license-MIT-lightgrey)
 
-> 📹 **[Watch the 60-second demo video](#)** *(replace with your Loom/YouTube link)*
+> 📹 **[Watch the 30-second demo video](#)** *(https://ai-support-widget-ecommerce-7ozw.vercel.app/index.html)*
 
 ---
 
