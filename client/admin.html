@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Knowledge Base Admin — AI Support Widget Demo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="admin-wrap">
+    <h1>📚 Knowledge Base</h1>
+    <p style="color:#6b7280;">
+      Add FAQs, policies, or product info here. The chat widget retrieves the most
+      relevant entries and uses them to answer customer questions — it will only
+      answer from what's here, and won't make things up.
+    </p>
+
+    <div class="card">
+      <label>Title</label>
+      <input id="title" placeholder="e.g. Return Policy" />
+      <label>Content</label>
+      <textarea id="content" placeholder="e.g. Customers can return any item within 30 days of delivery for a full refund..."></textarea>
+      <button class="primary" id="add-btn">Add to Knowledge Base</button>
+    </div>
+
+    <h2 style="font-size:18px;">Current entries</h2>
+    <div id="doc-list"></div>
+
+    <p><a href="index.html">← Back to demo store</a></p>
+  </div>
+
+  <script>
+    const API_BASE = "/api";
+
+    async function loadDocs() {
+      const res = await fetch(`${API_BASE}/documents`);
+      const docs = await res.json();
+      const list = document.getElementById("doc-list");
+      list.innerHTML = "";
+      if (docs.length === 0) {
+        list.innerHTML = '<p style="color:#9ca3af;">No entries yet — add your first one above.</p>';
+        return;
+      }
+      docs.forEach((doc) => {
+        const item = document.createElement("div");
+        item.className = "doc-item";
+        item.innerHTML = `
+          <div>
+            <strong>${escapeHtml(doc.title)}</strong>
+            <div class="doc-content">${escapeHtml(doc.content)}</div>
+          </div>
+          <button data-id="${doc._id}">Delete</button>
+        `;
+        item.querySelector("button").addEventListener("click", async () => {
+          await fetch(`${API_BASE}/documents/${doc._id}`, { method: "DELETE" });
+          loadDocs();
+        });
+        list.appendChild(item);
+      });
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement("div");
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    document.getElementById("add-btn").addEventListener("click", async () => {
+      const title = document.getElementById("title").value.trim();
+      const content = document.getElementById("content").value.trim();
+      if (!title || !content) return alert("Please fill in both fields.");
+
+      await fetch(`${API_BASE}/documents`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, content }),
+      });
+
+      document.getElementById("title").value = "";
+      document.getElementById("content").value = "";
+      loadDocs();
+    });
+
+    loadDocs();
+  </script>
+</body>
+</html>
